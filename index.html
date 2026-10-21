@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Social Finder</title>
+  <meta name="description" content="Find people on social networks by name or username and get ready-to-share links.">
+  <meta name="theme-color" content="#4F46E5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1020" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Social Finder">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="icons/icon.svg" alt="" width="32" height="32">
+      <span>Social Finder</span>
+    </div>
+    <button id="installBtn" class="btn ghost small" hidden>Install app</button>
+  </header>
+
+  <main>
+    <form id="searchForm" class="card" autocomplete="off">
+      <div class="seg" role="tablist" aria-label="Search by">
+        <button type="button" role="tab" data-mode="name" aria-selected="true">Full name</button>
+        <button type="button" role="tab" data-mode="username" aria-selected="false">Username</button>
+      </div>
+
+      <label class="field">
+        <span id="termLabel">Person's name</span>
+        <input id="term" name="q" type="search" required
+               placeholder="e.g. Anna Petrosyan" enterkeyhint="search">
+      </label>
+
+      <label class="field" id="extraField">
+        <span>Extra words <em>(optional)</em></span>
+        <input id="extra" name="extra" type="text" placeholder="City, school or company">
+      </label>
+
+      <button class="btn primary wide" type="submit">Find links</button>
+    </form>
+
+    <section id="results" class="card" hidden aria-live="polite">
+      <div class="results-head">
+        <h2 id="resultsTitle">Links</h2>
+        <div class="actions">
+          <button id="copyAll" class="btn ghost small" type="button">Copy all</button>
+          <button id="shareAll" class="btn ghost small" type="button">Share</button>
+        </div>
+      </div>
+      <a id="googleAll" class="google-all" target="_blank" rel="noopener noreferrer">
+        <span class="badge" style="--c:#4285F4">G</span>
+        <span class="g-text"><strong>Search all at once on Google</strong><small>One search across every selected network</small></span>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <ul id="list" class="list"></ul>
+      <p class="hint">Some networks only show results when you're signed in. A profile link opens a "not found" page if that username doesn't exist there.</p>
+    </section>
+
+    <section id="recentBox" class="card" hidden>
+      <div class="results-head">
+        <h2>Recent</h2>
+        <button id="clearRecent" class="btn ghost small" type="button">Clear</button>
+      </div>
+      <ul id="recent" class="chips"></ul>
+    </section>
+
+    <details class="card" id="settings">
+      <summary>Networks to search <span id="netCount" class="muted"></span></summary>
+      <div id="netList" class="net-grid"></div>
+      <div class="net-actions">
+        <button id="allOn" class="btn ghost small" type="button">Select all</button>
+        <button id="allOff" class="btn ghost small" type="button">Clear all</button>
+      </div>
+    </details>
+  </main>
+
+  <footer>
+    Everything stays on your device. This app only builds links. It doesn't collect or send data anywhere.
+  </footer>
+
+  <dialog id="copyDialog" class="copy-dialog">
+    <form method="dialog">
+      <h2>Copy these links</h2>
+      <p class="muted">Your browser blocked automatic copying. Select the text and copy it.</p>
+      <textarea id="copyText" readonly rows="8"></textarea>
+      <button class="btn primary wide">Done</button>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
